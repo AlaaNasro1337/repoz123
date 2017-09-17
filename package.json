@@ -1,0 +1,16 @@
+{
+  "name": "anonchat",
+  "version": "1.0.0",
+  "description": "Anonymous chat client",
+  "main": "server.js",
+  "scripts": {
+    "start": "node server.js"
+  },
+  "author": "Stephen Falcone",
+  "license": "ISC",
+  "dependencies": {
+    "express": "^4.15.4",
+    "mongodb": "^2.2.31",
+    "socket.io": "^2.0.3"
+  }
+}

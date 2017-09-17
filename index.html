@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <link rel = "stylesheet" href="./style.css">
+    <title>AnonChat</title>
+</head>
+	<body>
+	  <div class= "chatroom">
+      <h1 class="title">AnonChat</h1>
+      <div id="namebtn">
+			<input type = "text" class="input" id ="username" placeholder= "Enter your name">
+      <button id = "signInBtn">Sign In</button>
+      </div>
+      <br>
+        <div id= "chat-area">
+
+        </div>
+      <br>
+      <div class ="statusLine">Status: <span id="status"></span></div>
+			<textarea id="textarea" class="input" placeholder="Type your message"></textarea>
+    </div>
+    
+    <script src="/socket.io/socket.io.js"></script>
+    <script src="http://code.jquery.com/jquery-1.11.1.js"></script>
+    <script src="client.js"></script>
+	</body>
+</html>

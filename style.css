@@ -1,0 +1,29 @@
+#chat-area{
+    height:250px;
+    overflow: auto;
+    width:250px;
+}
+
+.chatroom{
+    /* horizontally center */
+    display: table;
+    margin: 0 auto;
+}
+
+.title{
+    text-align: center;
+}
+#textarea{
+    width: 250px;
+    height: 50px;
+    max-height: 50px;
+    max-width: 250px;
+}
+
+#namebtn{
+    width: 250px;
+    margin: 0px;
+}
+#username{
+    padding-right: 15px;
+}

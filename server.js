@@ -5,7 +5,7 @@ const mongo = require('mongodb').MongoClient;           //MONGODB
 var path = require('path');
 var server = require('http').Server(app);
 var io = require('socket.io')(server);
-var port = process.env.PORT || 4000;                    //PORT=XXXX node server.js will run on port XXXX
+var port = process.env.PORT || 3000;                    //PORT=XXXX node server.js will run on port XXXX
 
 //Set server to given port or 4000 if none given.
 server.listen(port, function(){
@@ -16,7 +16,7 @@ server.listen(port, function(){
 app.use(express.static(path.join(__dirname, '/')));
 
 //Connect to MongoDB
-mongo.connect('mongodb://127.0.0.1/anonchat', function(err, db){
+mongo.connect('mongodb://admin:admin@ds036967.mlab.com:36967/anonchat', function(err, db){
     if(err){
         throw err;
     }

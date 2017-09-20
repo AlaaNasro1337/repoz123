@@ -40,7 +40,7 @@ var socket = io();
         location.reload();
     });
 
-    //displays old messages from mongo server
+    //displays old messages from MongoDB
     socket.on('display old messages', function(res){
         if(res.length){
             for(var x=0; x<res.length; x++){

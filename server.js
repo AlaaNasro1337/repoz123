@@ -12,7 +12,7 @@ server.listen(port, function(){
     console.log('Server listening at port %d', port);
 }); 
 
-//Routing. Allows access to index.html, style.css, etc.
+//Serves Static Files. Allows loading of files in this directory. AKA index.html, style.css, etc.
 app.use(express.static(path.join(__dirname, '/')));
 
 //Connect to MongoDB

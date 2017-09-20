@@ -1,19 +1,25 @@
-// Setup basic express server
+//Express Module
 var express = require('express');
 var app = express();
-const mongo = require('mongodb').MongoClient;           //MONGODB
 var path = require('path');
+//Socket.io Module
 var server = require('http').Server(app);
 var io = require('socket.io')(server);
-var port = process.env.PORT || 3000;                    //PORT=XXXX node server.js will run on port XXXX
+//MongoDB module
+var mongo = require('mongodb').MongoClient;
 
-//Set server to given port or 4000 if none given.
+
+//Serves Static Files. Allows loading of files in listed directory.
+app.use(express.static(path.join(__dirname, '/')));
+
+//PORT=XXXX node server.js will run on port XXXX
+//Else, sets server to 3000 if no port specified
+var port = process.env.PORT || 3000;
+
+//Start server 
 server.listen(port, function(){
     console.log('Server listening at port %d', port);
 }); 
-
-//Serves Static Files. Allows loading of files in this directory. AKA index.html, style.css, etc.
-app.use(express.static(path.join(__dirname, '/')));
 
 //Connect to MongoDB
 mongo.connect('mongodb://admin:admin@ds036967.mlab.com:36967/anonchat', function(err, db){
@@ -22,8 +28,8 @@ mongo.connect('mongodb://admin:admin@ds036967.mlab.com:36967/anonchat', function
     }
     console.log('MongoDB connected...');
    
-//When a user enters webpage
-io.on('connection', function(socket){
+  //When a user enters webpage
+  io.on('connection', function(socket){
     console.log('An unknown user has connected.');
     let chat = db.collection('chats');
 
@@ -65,5 +71,5 @@ io.on('connection', function(socket){
             console.log(name+" has disconnected.");
         });
     });
-});
+  });
 });

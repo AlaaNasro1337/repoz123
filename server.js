@@ -1,20 +1,35 @@
-//Express Module
-var express = require('express');
-var app = express();
-var path = require('path');
-//Socket.io Module
-var server = require('http').Server(app);
-var io = require('socket.io')(server);
-//MongoDB module
-var mongo = require('mongodb').MongoClient;
+const express = require('express');
+const app = express();
+const path = require('path');
+const server = require('http').Server(app);
+const bodyParser = require('body-parser');
+const cors = require('cors');
+const passport = require('passport');
+const mongoose = require('mongoose');
 
+//configuration file for DB
+const config = require('./config/database');
+
+//Sets server to 3000 if no port specified
+var port = process.env.PORT || 3000;
 
 //Serves Static Files. Allows loading of files in listed directory.
-app.use(express.static(path.join(__dirname, '/')));
+app.use(express.static(path.join(__dirname, 'public')));
 
-//PORT=XXXX node server.js will run on port XXXX
-//Else, sets server to 3000 if no port specified
-var port = process.env.PORT || 3000;
+//BodyParser Middleware. Grab data from submitted forms, etc.
+app.use(bodyParser.json());
+
+//Cors Middleware. Request to API from different domain names
+//app.use(cors());
+
+//Passport Middleware.
+app.use(passport.initialize());
+app.use(passport.session());
+require('./config/passport')(passport);
+
+//Routing
+const chat = require('./routes/chat');
+app.use('/', chat);
 
 //Start server 
 server.listen(port, function(){
@@ -22,19 +37,19 @@ server.listen(port, function(){
 }); 
 
 //Connect to MongoDB
-mongo.connect('mongodb://admin:admin@ds036967.mlab.com:36967/anonchat', function(err, db){
-    if(err){
-        throw err;
-    }
+mongoose.Promise = global.Promise;
+mongoose.connect(config.database, {useMongoClient: true}, function(err){
+    if(err) throw err;
     console.log('MongoDB connected...');
+});
    
-  //When a user enters webpage
+/*   //When a user enters webpage
   io.on('connection', function(socket){
     console.log('An unknown user has connected.');
-    let chat = db.collection('chats');
+    let chats = db.collection('chats');
 
       //Get the last 20 messages from MongoDB
-      chat.find().limit(20).sort({_id:-1}).toArray(function(err, res){
+      chats.find().limit(20).sort({_id:-1}).toArray(function(err, res){
         if(err){
             throw err;
         }
@@ -57,7 +72,7 @@ mongo.connect('mongodb://admin:admin@ds036967.mlab.com:36967/anonchat', function
         socket.on('message sent', function(msg){
             if (msg != ''){
                 console.log(name + ": " + msg);
-                chat.insert({name: name, message: msg}, function(){
+                chats.insert({name: name, message: msg}, function(){
                     io.emit('new message', {
                         username: name,
                         message: msg
@@ -71,5 +86,4 @@ mongo.connect('mongodb://admin:admin@ds036967.mlab.com:36967/anonchat', function
             console.log(name+" has disconnected.");
         });
     });
-  });
-});
+  }); */

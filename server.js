@@ -13,7 +13,7 @@ var mongo = require('mongodb').MongoClient;
 app.use(express.static(path.join(__dirname, '/')));
 
 //PORT=XXXX node server.js will run on port XXXX
-//Else, sets server to 3000 if no port specified
+//Sets server to 3000 if no port specified
 var port = process.env.PORT || 3000;
 
 //Start server 
